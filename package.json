@@ -1,0 +1,22 @@
+{
+  "name": "re-san",
+  "version": "1.0.0",
+  "description": "a San-like front end framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wmzhong/reSan.git"
+  },
+  "author": "Winter",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wmzhong/reSan/issues"
+  },
+  "homepage": "https://github.com/wmzhong/reSan#readme",
+  "devDependencies": {
+    "mocha": "^5.0.1"
+  }
+}
