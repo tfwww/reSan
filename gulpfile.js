@@ -13,5 +13,6 @@ gulp.task('browser-sync', function() {
 
     gulp.watch('./test/*.js').on('change', browserSync.reload)
     gulp.watch('./test/*.css').on('change', browserSync.reload)
-    gulp.watch('./test/*.html').on('change', browserSync.reload)    
+    gulp.watch('./test/*.html').on('change', browserSync.reload)
+    gulp.watch('./src/*.js').on('change', browserSync.reload)
 });
