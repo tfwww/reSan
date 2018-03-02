@@ -4,7 +4,8 @@
 	"description": "a San-like front end framework",
 	"main": "index.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "gulp"
 	},
 	"repository": {
 		"type": "git",
@@ -17,6 +18,8 @@
 	},
 	"homepage": "https://github.com/wmzhong/reSan#readme",
 	"devDependencies": {
+		"browser-sync": "^2.23.6",
+		"gulp": "^3.9.1",
 		"mocha": "^5.0.1"
 	}
 }

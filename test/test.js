@@ -4,7 +4,8 @@ function __main() {
     // var a = parse(`<ul id="test-id" class="test-class"><li>1</li><li>2</li><li>3</li></ul>`)
     
     var a = analysis('<ul id="test-id" class="test-class"><li>1</li><li>2</li><li>3</li></ul>')
-    log('a', a)
+    var a = analysis('<html>')    
+    log('d', a)
 }
 
 __main()
