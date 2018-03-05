@@ -24,7 +24,7 @@ function formatSrc(source) {
 }
 
 // 对单个 html 节点解析
-function analysis(source, childObj) {
+function analysis(source) {
     var src = source.slice(0)
     var type = ''
     
@@ -32,23 +32,29 @@ function analysis(source, childObj) {
         type: '',
         attr: '',
         text: '',
-        child: childObj,
+        child: '',
     }
     
     child.type = parseType(src)
     child.attr = parseAttr(src)
     child.text = parseText(src)    
-    child.child = childObj
+    // child.child = childObj
     log('child', child)
     return child
 }
 
-function analysisNode(nodeList) {
-    log('ana map', nodeList)    
+// 如果是兄弟节点，则为数组结果
+function brotherNode() {
+
+}
+
+function analysisNode(nodeList) {    
     var list = nodeList.map(function(v, i) {
         return analysis(v)
     })
+    
     var obj = {child: list[0]}
+
     for (var i = 0; i < list.length; i++) {
         var item = list[i];
         item.child = list[i + 1]
