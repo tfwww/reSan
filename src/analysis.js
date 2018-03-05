@@ -43,25 +43,51 @@ function analysis(source) {
     return child
 }
 
-// 如果是兄弟节点，则为数组结果
-function brotherNode() {
-
-}
-
-function analysisNode(nodeList) {    
+// 兄弟元素放到同一个数组里
+function brotherNode(nodeList) {
     var list = nodeList.map(function(v, i) {
         return analysis(v)
     })
-    
-    var obj = {child: list[0]}
-
+    var typeList = []
     for (var i = 0; i < list.length; i++) {
         var item = list[i];
-        item.child = list[i + 1]
+        typeList.push(item.type)
+    }
+    // 去重
+    var typeSet = new Set(typeList)
+    var result = []
+    typeSet.forEach(function(v) {        
+        result.push(v)        
+    })
 
+    var brotherNode = result.map(function(v, inx) {
+        var arr = []
+        for (var i = 0; i < list.length; i++) {
+            var item = list[i];
+            if (item.type === v) {
+                arr.push(item)
+            }            
+        }
+        return arr
+    })
+    return brotherNode    
+}
+
+function analysisNode(nodeList) {
+    log('nodeList in', nodeList)
+    // var list = nodeList.map(function(v, i) {
+    //     return analysis(v)
+    // })
+    var list = brotherNode(nodeList)
+    var obj = {child: list[0]}
+    for (var i = 0; i < list.length; i++) {
+        var item = list[i];
+        log('item', item)
+        // item.child = list[i + 1]
+        item[0].child = list[i + 1]
         if (i + 1 >= list.length) {      
             item.child = null
-        } 
+        }         
     }
     return obj
 }

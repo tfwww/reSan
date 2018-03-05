@@ -10,6 +10,7 @@ function __main() {
     formatSrc(src)    
     log('node list', wmNodeList)    
     var result = analysisNode(wmNodeList)
+    // brotherNode(wmNodeList)
     log('node obj', result)
 }
 
