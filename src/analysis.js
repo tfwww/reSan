@@ -1,3 +1,6 @@
+import 'babel-polyfill'
+import {log} from './log.js'
+
 var start = '<'
 var end = '>'
 var space = ' '
@@ -188,3 +191,4 @@ function trim(str) {
     return result
 }
 
+export {wmNodeList, analysisNode, formatSrc}

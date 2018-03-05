@@ -4,8 +4,9 @@
 	"description": "a San-like front end framework",
 	"main": "index.js",
 	"scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "dev": "gulp"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dev": "gulp",
+		"build": "webpack"
 	},
 	"repository": {
 		"type": "git",
@@ -18,8 +19,15 @@
 	},
 	"homepage": "https://github.com/wmzhong/reSan#readme",
 	"devDependencies": {
+		"babel-core": "^6.26.0",
+		"babel-loader": "^7.1.3",
+		"babel-polyfill": "^6.26.0",
+		"babel-preset-es2015": "^6.24.1",
 		"browser-sync": "^2.23.6",
+		"chai": "^4.1.2",
 		"gulp": "^3.9.1",
-		"mocha": "^5.0.1"
-	}
+		"mocha": "^5.0.1",
+		"webpack-stream": "^4.0.2"
+	},
+	"dependencies": {}
 }
