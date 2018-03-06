@@ -1,5 +1,5 @@
-import 'babel-polyfill'
-import {log} from './log.js'
+// import 'babel-polyfill'
+// import {log} from './log.js'
 
 var start = '<'
 var end = '>'
@@ -48,6 +48,7 @@ function analysis(source) {
 
 // 兄弟元素放到同一个数组里
 function brotherNode(nodeList) {
+    log('bro', nodeList)
     var list = nodeList.map(function(v, i) {
         return analysis(v)
     })
@@ -81,7 +82,8 @@ function analysisNode(nodeList) {
     // var list = nodeList.map(function(v, i) {
     //     return analysis(v)
     // })
-    var list = brotherNode(nodeList)
+    formatSrc(nodeList)
+    var list = brotherNode(wmNodeList)
     var obj = {child: list[0]}
     for (var i = 0; i < list.length; i++) {
         var item = list[i];
@@ -191,4 +193,4 @@ function trim(str) {
     return result
 }
 
-export {wmNodeList, analysisNode, formatSrc}
+// export {wmNodeList, analysisNode, formatSrc}

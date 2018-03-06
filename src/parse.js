@@ -1,4 +1,4 @@
-// define(function () {
+// define(function () {    
     var SELF_CLOSE_TAG = {
         'img': 1,
         'input': 1
@@ -84,5 +84,3 @@
     }
 
 // });
-
-export {parse}

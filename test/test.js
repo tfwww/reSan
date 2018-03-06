@@ -15,7 +15,7 @@ function __main() {
     // log('node list', wmNodeList) 
     var result = analysisNode(wmNodeList)
     // brotherNode(wmNodeList)
-    // log('node obj', result)
+    log('node obj', result)
 }
 
 __main()
