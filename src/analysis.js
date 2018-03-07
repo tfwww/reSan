@@ -78,10 +78,7 @@ function brotherNode(nodeList) {
 }
 
 function analysisNode(nodeList) {
-    log('nodeList in', nodeList)
-    // var list = nodeList.map(function(v, i) {
-    //     return analysis(v)
-    // })
+    log('nodeList in', nodeList)   
     formatSrc(nodeList)
     var list = brotherNode(wmNodeList)
     var obj = {child: list[0]}
@@ -90,10 +87,11 @@ function analysisNode(nodeList) {
         log('item', item)
         // item.child = list[i + 1]
         item[0].child = list[i + 1]
-        if (i + 1 >= list.length) {      
+        if (i + 1 >= list.length) {
             item.child = null
         }         
     }
+    log('result', obj)
     return obj
 }
 
@@ -177,8 +175,6 @@ function startInx(src) {
 function endInx(src) {
     var tagName = parseType(src)
     var endTag = close + tagName + end
-    log('tagName', tagName)
-    log('end tag', endTag)
     var fSrc = src
     log('end inde', fSrc.indexOf(endTag))
     return fSrc.indexOf(endTag)
