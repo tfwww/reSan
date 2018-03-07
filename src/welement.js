@@ -8,14 +8,23 @@ function Welement(option) {
     var rootEle = document.querySelector(opt.el)
     var nodeList = Array.prototype.slice.call(rootEle.children)
 
-    nodeList.map(function(v, i) {
-        // 切掉花括号
+    nodeList.map(function(v, i) {        
         var text = util.rmBrace(v.innerText)        
         v.innerText = opt.data[text]
         
         var bothway = v.getAttribute('w-bothway')
-        var attrValue = util.rmSpace(bothway)
-        log('attV', attrValue)
+        if (bothway) {
+            var attrValue = util.rmSpace(bothway)
+            Object.defineProperty(v, 'w-bothway', {
+                set: function(value) {
+                    v.value = value
+                },
+                get: function() {
+                    return v.value
+                }
+            })
+            v['w-bothway'] = 'sdf'
+        }        
     })
 }
 
