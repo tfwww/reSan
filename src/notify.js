@@ -28,8 +28,8 @@ Object.defineProperty(correct, "newKey", {
 	}
 });
 
-var correct = {existKey: 'test'};
-Object.defineProperty(correct, "existKey", {
+var wrong = {existKey: 'test'};
+Object.defineProperty(wrong, "existKey", {
 	get: function() {
 		return this.existKey;
 	},

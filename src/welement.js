@@ -14,15 +14,7 @@ function Welement(option) {
         
         var bothway = v.getAttribute('w-bothway')
         if (bothway) {
-            var attrValue = util.rmSpace(bothway)
-            Object.defineProperty(v, 'w-bothway', {
-                set: function(value) {
-                    v.value = value
-                },
-                get: function() {
-                    return v.value
-                }
-            })            
+            var attrValue = util.rmSpace(bothway)            
         }        
     })
 }
