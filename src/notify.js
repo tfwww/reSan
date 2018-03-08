@@ -31,7 +31,7 @@ Object.defineProperty(correct, "newKey", {
 var wrong = {existKey: 'test'};
 Object.defineProperty(wrong, "existKey", {
 	get: function() {
-		return this.existKey;
+		return this._existKey;
 	},
 	set: function(newValue) {
 		console.log('set')
