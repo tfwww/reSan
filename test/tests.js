@@ -29,7 +29,7 @@ describe('解析 DOM', function () {
 	}    
 	it('DOM 字符串应该解析成正确的数据结构', function () {
         var run = JSON.stringify(analysisNode(src))
-		// expect(run).to.be.equal(JSON.stringify(result));
+		expect(run).to.be.equal(JSON.stringify(result));
 	});
 });
 

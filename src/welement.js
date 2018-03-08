@@ -22,18 +22,9 @@ function Welement(option) {
                 get: function() {
                     return v.value
                 }
-            })
-            v['w-bothway'] = 'sdf'
+            })            
         }        
     })
-}
-
-function parseText(node) {
-    // 去掉空格
-    var text = node.innerText.replace(/\s*/g, '')
-    var list = text.match(/(\{\{.*?\}\}?)/g)
-
-    return list
 }
 
 // 解析
