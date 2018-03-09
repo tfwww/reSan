@@ -23,3 +23,13 @@ Util.prototype.rmBrace = function(str) {
 
     return result === '' ? null : result
 }
+
+Util.prototype.replaceBrace = function(src, replacer) {
+    var result = null
+    
+    if (typeof src === 'string') {
+        result = src.replace(/\{\{(.*)\}\}/g, replacer)
+    }
+
+    return result === '' ? null : result
+}

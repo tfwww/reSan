@@ -1,10 +1,10 @@
-var data = {name: 'origin'};
-Notify(data);
-data.name = 'newOrigin'; // 监听到值变化了 origin --> newOrigin
-
+// var data = {name: 'origin'};
+// monitor(data);
+// data.name = 'newOrigin'; // 监听到值变化了 origin --> newOrigin
+var notify = new NotifyCenter()
 
 // 通知中心，监听 data 变化
-function Notify(data) {
+function monitor(data) {
     var keyList = Object.keys(data)
     var init = data.name
     Object.defineProperty(data, 'name', {        
@@ -13,11 +13,49 @@ function Notify(data) {
         },
         set: function(value) {
             console.log('value change', value)
+            notify.addBroadcast()
             this._name = value
         }
     })
 }
-log('data', data)
+// log('data', data)
+
+// 订阅者模式
+function NotifyCenter() {
+    this.center = []
+}
+
+NotifyCenter.prototype = {
+    // add event listener
+    addBroadcast: function(eventName, target, handler) {
+        
+        var center = this.center
+        var obj = {
+            name: eventName,
+            target: target,
+            handler: handler
+        }
+        // center.push(obj)
+        center.push()
+    },
+
+    // fire event listener
+    fireBroadcast: function(eventName, target) {
+        var mapper = this.center
+        handleWithEvent(mapper, eventName, target)
+    }
+}
+
+function handleWithEvent(array, event, target) {    
+    for (var i = 0; i < array.length; i++) {
+        var item = array[i];
+        if (item['name'] === event && item['target'] === target) {
+            item['handler']()    
+        }
+    }
+}
+
+
 
 // var correct = {};
 // Object.defineProperty(correct, "newKey", {
