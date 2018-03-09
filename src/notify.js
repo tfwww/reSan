@@ -6,37 +6,38 @@ data.name = 'newOrigin'; // 监听到值变化了 origin --> newOrigin
 // 通知中心，监听 data 变化
 function Notify(data) {
     var keyList = Object.keys(data)
+    var init = data.name
     Object.defineProperty(data, 'name', {        
         get: function() {
-            return 'sdf'
+            return this._name || init
         },
         set: function(value) {
             console.log('value change', value)
-            // this.name = value
+            this._name = value
         }
     })
 }
 log('data', data)
 
-var correct = {};
-Object.defineProperty(correct, "newKey", {
-	get: function() {
-		return this.newKey;
-	},
-	set: function(newValue) {
-		console.log('set')
-	}
-});
+// var correct = {};
+// Object.defineProperty(correct, "newKey", {
+// 	get: function() {
+// 		return this.newKey;
+// 	},
+// 	set: function(newValue) {
+// 		console.log('set')
+// 	}
+// });
 
-var wrong = {existKey: 'test'};
-Object.defineProperty(wrong, "existKey", {
-	get: function() {
-		return this._existKey;
-	},
-	set: function(newValue) {
-		console.log('set')
-	}
-});
+// var wrong = {existKey: 'test'};
+// Object.defineProperty(wrong, "existKey", {
+// 	get: function() {
+// 		return this._existKey;
+// 	},
+// 	set: function(newValue) {
+// 		console.log('set')
+// 	}
+// });
 
 // var data = {name: 'kindeng'};
 // observe(data);
@@ -70,3 +71,4 @@ Object.defineProperty(wrong, "existKey", {
 // }
 
 // defineReactive(test, 'test', 'sdf')
+
