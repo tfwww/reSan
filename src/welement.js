@@ -36,6 +36,12 @@ function tpl(match, name) {
     dataElePair[name]['dom'] = []
     return `<span ${mark}="${name}"></span>`
 }
+
+// 移除之前添加的自定义节点，添加相应的 data 文本值
+// function updateNode(srcEle, insertEle) {
+//     srcEle.insertAdjacentElement('beforebegin', element);
+//     srcEle.
+// }
 // 构造成这样的数据结构 {title: {value: 'hello', dom: node}}
 function dataWithDom(pair, srcData) {
     for (const key in pair) {        
@@ -45,16 +51,15 @@ function dataWithDom(pair, srcData) {
             log('elelist', eleList)
             pair[key]['dom'] = eleList
             pair[key]['value'] = srcData[key]
-
+           
             Object.defineProperty(srcData, key, {
-                set: function (newVal) {
-                    log('set newVal')
-
-                    Array.prototype.forEach.call(pair[key]['dom'], function(ele) {
-                        log('ele')
-                        ele.textContent = newVal
-                        pair[key].value = newVal                        
+                set: function (newVal) {                    
+                    Array.prototype.forEach.call(pair[key]['dom'], function(ele) {                        
+                        // ele.textContent = newVal
+                        var newNode = document.createTextNode(newVal)
+                        ele.parentNode.replaceChild(newNode, ele);
                     })
+                    pair[key].value = newVal
                 },
                 get: function () {
                     return pair[key].value
