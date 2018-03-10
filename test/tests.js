@@ -42,6 +42,16 @@ var app = new Welement({
     }
 })
 
+function eventBind() {
+    var ele = document.querySelector('.input')
+    ele.addEventListener('input', function(event) {
+        log('change')       
+        app.data.message = ele.value
+    })
+}
+
+eventBind()
+
 // var data = {title: 'test', msg: 'hello msg'}
 // // var result = dataWithDom(data)
 // // log('result', result)
