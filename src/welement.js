@@ -1,5 +1,6 @@
 var util = new Util()
 const mark = 'bind-data-element'
+var dataElePair = {}
 
 function Welement(option) {
     var opt = option || {}
@@ -8,19 +9,8 @@ function Welement(option) {
     
     var rootEle = document.querySelector(opt.root)
     formatNode(rootEle)
-    dataWithDom(this.data)
-    var nodeList = Array.prototype.slice.call(rootEle.children)
-    
-    // Object.defineProperty(this.data, variable, {
-    //     set: function (newVal) {
-    //         [].forEach.call(bindings[variable].els, function (e) {
-    //             bindings[variable].value = e.textContent = newVal
-    //         })
-    //     },
-    //     get: function () {
-    //         return bindings[variable].value
-    //     }
-    // })
+    dataWithDom(dataElePair, this.data)
+    var nodeList = Array.prototype.slice.call(rootEle.children)    
     // nodeList.forEach(v => {        
     //     var text = util.rmBrace(v.innerText)        
     //     v.innerText = opt.data[text]
@@ -36,30 +26,26 @@ function Welement(option) {
 function formatNode(rootEle) {
     var src = rootEle.innerHTML
     var result = util.replaceBrace(src, tpl)
-    log('reult', result)
     rootEle.innerHTML = result
 }
 
-function tpl(match, name) {   
+function tpl(match, name) {
+    dataElePair[name] = {}
+    dataElePair[name]['dom'] = []
     return `<span ${mark}="${name}"></span>`
 }
-// {title: 'test'} => {title: {value: 'hello', dom: node}}
-function dataWithDom(dataObj) {
-    log('datawith')
-    var attr = `[${mark}]`
-    var eleList = document.querySelectorAll(attr)
-    log('ele list', eleList)
-    // var result = {}
-    // for (const key in dataObj) {
-    //     if (dataObj.hasOwnProperty(key)) {
-    //         var attr = `[${mark}=${key}]`
-    //         var ele = document.querySelector(attr)
-    //         const item = dataObj[key];            
-    //         result[key] = {value: item}            
-    //         result[key]['dom'] = []            
-    //     }
-    // }
-    // log('result', result)
+// 返回 {title: {value: 'hello', dom: node}}
+function dataWithDom(pair, srcData) {
+    for (const key in pair) {        
+        if (pair.hasOwnProperty(key)) {            
+            var attr = `[${mark}=${key}]`
+            var eleList = document.querySelectorAll(attr)
+            pair[key]['dom'] = eleList
+            pair[key]['value'] = srcData[key]
+        }
+    }
+    log('pair', pair)
+    return pair
 }
 
 
