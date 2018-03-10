@@ -9,19 +9,9 @@ function Welement(option) {
     
     var rootEle = document.querySelector(opt.root)
     formatNode(rootEle)
-    dataWithDom(dataElePair, this.data)    
-    this.data.title = 'testTitle'
-    this.data.message = 'hell msg'
-    var nodeList = Array.prototype.slice.call(rootEle.children)    
-    // nodeList.forEach(v => {        
-    //     var text = util.rmBrace(v.innerText)        
-    //     v.innerText = opt.data[text]
-        
-    //     var bothway = v.getAttribute('w-bothway')
-    //     if (bothway) {
-    //         var attrValue = util.rmSpace(bothway)
-    //     }
-    // });
+    dataWithDom(dataElePair, this.data)
+    // this.data.title = 'testTitle'
+    // this.data.message = 'hell msg'
 }
 
 // 将 DOM 中 {{xxx}} 变量变成一个单独的节点
@@ -53,7 +43,8 @@ function dataWithDom(pair, srcData) {
             pair[key]['value'] = srcData[key]
            
             Object.defineProperty(srcData, key, {
-                set: function (newVal) {                    
+                set: function (newVal) {
+                    log('new', newVal)               
                     Array.prototype.forEach.call(pair[key]['dom'], function(ele) {                        
                         // ele.textContent = newVal
                         var newNode = document.createTextNode(newVal)
@@ -62,10 +53,13 @@ function dataWithDom(pair, srcData) {
                     pair[key].value = newVal
                 },
                 get: function () {
+                    log('get')
                     return pair[key].value
                 }
             })
         }
+        // 初始情况
+        srcData[key] = pair[key]['value']
     }
     log('pair', pair)
     log('origin', dataElePair)

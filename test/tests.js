@@ -37,7 +37,7 @@ var app = new Welement({
     root: '#app',
     data: {
         title: 'test',        
-        message: 'Hello Element!',
+        message: 'Hello Welement',
         tip: '',
     }
 })
