@@ -1,6 +1,7 @@
-var util = new Util()
-const mark = 'bind-data-element'
-const attr = 'w-bothway'
+import util from './util.js'
+import {Interpret} from './interpret.js'
+import {log} from '../src/log.js'
+
 // var dataElePair = {}
 
 function Welement(option) {
@@ -36,11 +37,7 @@ function Welement(option) {
 //     }
 //     return obj
 // }
-function tpl(match, name) {
-    // dataElePair[name] = {}
-    // dataElePair[name]['dom'] = []
-    return `<span ${mark}="${name}"></span>`
-}
+
 // 将属性的节点也放入构造的数据对象 dataElePair 里
 // function pushAttrData(rootEle, dataEleObj) {
 //     log('begin', dataEleObj)
@@ -93,6 +90,8 @@ function tpl(match, name) {
 //     return pair
 // }
 
+
+export {Welement}
 
 
 

@@ -33,3 +33,7 @@ Util.prototype.replaceBrace = function(src, replacer) {
 
     return result === '' ? null : result
 }
+
+var util = new Util()
+
+export {util}

@@ -1,5 +1,7 @@
+import {Welement} from '../src/welement.js'
+import {log} from '../src/log.js'
 
-var expect = chai.expect;
+// var expect = chai.expect;
 // describe('解析 DOM', function () {
 // 	var src = '<ul id="test-id" class="test-class">文本标题<li>1</li><li>2</li><li>3</li></ul>'
 //     var result = {
@@ -39,6 +41,9 @@ var app = new Welement({
         title: 'test',        
         message: 'Hello Welement',
         tip: '',
+    },
+    showTip: function() {
+        log('abc')
     }
 })
 
@@ -51,6 +56,7 @@ function eventBind() {
 }
 
 eventBind()
+
 
 // var data = {title: 'test', msg: 'hello msg'}
 // // var result = dataWithDom(data)
