@@ -1,11 +1,13 @@
 // 解析 dom
 import {commandObj} from './command.js'
 import {util} from './util.js'
-import {log} from '../src/log.js'
+// import {log} from '../src/log.js'
 
 var prefix = 'w-'
 const mark = 'bind-data-element'
 const attr = 'w-bothway'
+const onReg = /^v-on:|^@/
+
 var attrSel = Object.keys(commandObj).map(function(item) {
     return `[${prefix}${item}]`
 }).join()
@@ -19,14 +21,15 @@ function Interpret(option) {
     var root = opt.root
     var data = opt.data
     var dataElePair = initPair(data)    
-    var rootEle = document.querySelector(opt.root)    
+    var rootEle = document.querySelector(opt.root)
+    var attrEles = rootEle.querySelectorAll(attrSel)
+    log('atr eles', attrEles)   
     formatNode(rootEle)
     dataWithDom(dataElePair, data)
     pushAttrData(rootEle, dataElePair)
 
     // 解析自定义命令
-    function parseCommand() {
-        
+    function parseCommand(attrSel) {
     }
 }
 
