@@ -36,26 +36,26 @@ import {log} from '../src/log.js'
 // });
 
 var app = new Welement({
-    root: '#app',
+    el: 'app',
+    // template
     data: {
-        title: 'test',        
-        message: 'Hello Welement',
-        tip: '',
-    },
-    showTip: function() {
-        log('abc')
-    }
+        msg: 'hellowinter',
+        hello: 'WHWHWHW',
+        changeMessage: function () {
+            app.scope.msg = 'hola'
+        }
+    }    
 })
 
-function eventBind() {
-    var ele = document.querySelector('.input')
-    ele.addEventListener('input', function(event) {
-        log('change')       
-        app.data.message = ele.value
-    })
-}
+// function eventBind() {
+//     var ele = document.querySelector('.input')
+//     ele.addEventListener('input', function(event) {
+//         log('change')       
+//         app.data.message = ele.value
+//     })
+// }
 
-eventBind()
+// eventBind()
 
 
 // var data = {title: 'test', msg: 'hello msg'}
