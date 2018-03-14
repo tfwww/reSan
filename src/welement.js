@@ -47,6 +47,11 @@ function parseDirective(attr) {
     log('attr', attr)    
     var name = attr.name
     var value = attr.value
+    
+    return {
+        attr: attr,
+        
+    }
 }
 
 export {Welement}
