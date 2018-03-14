@@ -44,7 +44,9 @@ function cloneAttrs(attrs) {
  * @param {object} attr {name: 属性名, value: 属性值}
  */
 function parseDirective(attr) {
-    log('attr', attr)
+    log('attr', attr)    
+    var name = attr.name
+    var value = attr.value
 }
 
 export {Welement}
