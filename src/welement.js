@@ -10,18 +10,39 @@ log('sel', selectors)
 // var dataElePair = {}
 
 function Welement(option) {
+    log('this', this)
+    var self = this    
     var opt = option || {}
-    var data = opt.data
+    log('option', opt)
+    
     var bindings = {}
+
+    self.data = {}
+    self.el = document.getElementById(opt.el)    
+    
+    var data = opt.data    
     var rootEl = document.getElementById(opt.el)
     var els = rootEl.querySelectorAll(selectors)
 
-    Array.prototype.forEach.call(els, function(el) {        
+    Array.prototype.forEach.call(els, processNode)
+    processNode(rootEl)
+
+    // 初始设置触发 set 存取器
+    for (var key in bindings) {
+        log('key', key)
+        log('opt key', opt[key])
+        self.data[key] = opt.data[key]
+    }
+    
+    function processNode(el) {
         var attrs = cloneAttrs(el.attributes)
         attrs.forEach(function(attr) {
-            parseDirective(attr)
+            var directive = parseDirective(attr)            
+            if (directive) {
+                bindDirective(self, el, bindings, directive)
+            }
         })
-    })
+    }
 }
 
 /**
@@ -44,14 +65,76 @@ function cloneAttrs(attrs) {
  * @param {object} attr {name: 属性名, value: 属性值}
  */
 function parseDirective(attr) {
-    log('attr', attr)    
     var name = attr.name
     var value = attr.value
+
+    // 解析出指令内容
+    var barInx = value.indexOf('|')
+    var key = barInx === -1 ? value.trim() : value.slice(0, barInx).trim()
+    var filter = barInx === -1 ? null : value.slice(barInx + 1).split('|').map(function(item){
+        return item.trim()
+    })
+
+    // 解析指令名 key
+    var noprefix = name.slice(prefix.length + 1)
+    var symInx = noprefix.indexOf('-')
+    var dirName = symInx === -1 ? noprefix : noprefix.slice(0, symInx)
+    var def = directives[dirName]
+    // 取第二个 - 的参数, 事件
+    var arg = symInx === -1 ? null : noprefix.slice(symInx + 1)
     
-    return {
+    return def === undefined ? null : {
         attr: attr,
-        
+        key: key,
+        filter: filter,
+        definition: def,
+        argument: arg,
+        update: typeof def === 'function' ? def : def.update
     }
+}
+
+// 将指令放到 bindings 对象中
+function bindDirective(welement, el, bindings, directive) {
+    el.removeAttribute(directive.attr.name)
+    var key = directive.key
+    var binding = bindings[key]
+    log('in bindings', bindings[key])
+    
+    if (!binding) {
+        bindings[key] = {
+            value: undefined,
+            directives: []
+        }
+        binding = {
+            value: undefined,
+            directives: []
+        }
+    }
+    directive.el = el
+    binding.directives.push(directive)
+    var data = welement.data
+    if (!data.hasOwnProperty(key)) {   
+        bindAccessor(welement, key, binding)
+    }
+}
+
+function bindAccessor(obj, key, binding) {
+    log('obj key', key)
+    Object.defineProperty(obj.data, key, {
+        get: function() {
+            return binding.value
+        },
+        set: function(newValue) {
+            log('new value', newValue)
+            var oldValue = binding.value
+            if (oldValue != newValue) {
+                binding.value = newValue
+                binding.directives.forEach(function(directive) {
+                    directive.update(directive.el, newValue, directive.argument, directive)
+                })
+            }
+        }
+    })
 }
 
 export {Welement}

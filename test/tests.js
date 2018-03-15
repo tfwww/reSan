@@ -40,7 +40,7 @@ var app = new Welement({
     // template
     data: {
         msg: 'hellowinter',
-        hello: 'WHWHWHW',
+        hello: 'hello',
         changeMessage: function () {
             app.scope.msg = 'hola'
         }
