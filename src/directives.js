@@ -1,4 +1,4 @@
-var directives = {
+var Directives = {
     text: function(el, value) {
         el.textContent = value || ''
     },
@@ -24,4 +24,4 @@ var directives = {
     }
 }
 
-export {directives}
+export {Directives}

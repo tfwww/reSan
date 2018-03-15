@@ -1,26 +1,21 @@
 import util from './util'
-import {directives} from './directives'
+import {Directives} from './directives'
+import {Filter} from './filter'
 
 var prefix = 'v'
-var selectors = Object.keys(directives).map(function(key) {
+var selectors = Object.keys(Directives).map(function(key) {
     return `[${prefix}-${key}]`
 }).join()
 
-log('sel', selectors)
-// var dataElePair = {}
-
-function Welement(option) {
-    log('this', this)
+function Welement(option) {    
     var self = this    
-    var opt = option || {}
-    log('option', opt)
-    
+    var opt = option || {}    
     var bindings = {}
 
     self.data = {}
-    self.el = document.getElementById(opt.el)    
+    self.el = document.getElementById(opt.el)
     
-    var data = opt.data    
+    var data = opt.data
     var rootEl = document.getElementById(opt.el)
     var els = rootEl.querySelectorAll(selectors)
 
@@ -35,7 +30,8 @@ function Welement(option) {
     function processNode(el) {
         var attrs = cloneAttrs(el.attributes)
         attrs.forEach(function(attr) {
-            var directive = parseDirective(attr)            
+            var directive = parseDirective(attr)
+            log('directive', directive)
             if (directive) {
                 bindDirective(self, el, bindings, directive)
             }
@@ -77,14 +73,14 @@ function parseDirective(attr) {
     var noprefix = name.slice(prefix.length + 1)
     var symInx = noprefix.indexOf('-')
     var dirName = symInx === -1 ? noprefix : noprefix.slice(0, symInx)
-    var def = directives[dirName]
+    var def = Directives[dirName]
     // 取第二个 - 的参数, 事件
     var arg = symInx === -1 ? null : noprefix.slice(symInx + 1)
     
     return def === undefined ? null : {
         attr: attr,
         key: key,
-        filter: filter,
+        filter: Filter[filter],
         definition: def,
         argument: arg,
         update: typeof def === 'function' ? def : def.update
@@ -95,8 +91,7 @@ function parseDirective(attr) {
 function bindDirective(welement, el, bindings, directive) {
     el.removeAttribute(directive.attr.name)
     var key = directive.key
-    var binding = bindings[key]
-    log('in bindings', bindings[key])
+    var binding = bindings[key]    
     
     if (!binding) {
         bindings[key] = {
@@ -116,18 +111,19 @@ function bindDirective(welement, el, bindings, directive) {
     }
 }
 
-function bindAccessor(obj, key, binding) {
-    log('obj key', key)
+function bindAccessor(obj, key, binding) {    
     Object.defineProperty(obj.data, key, {
         get: function() {
             return binding.value
         },
-        set: function(newValue) {
-            log('new value', newValue)
+        set: function(newValue) {            
             var oldValue = binding.value
             if (oldValue != newValue) {
-                binding.value = newValue
-                binding.directives.forEach(function(directive) {
+                binding.value = newValue                
+                binding.directives.forEach(function(directive) {                    
+                    if (newValue && directive.filter) {
+                        newValue = directive.filter(newValue)
+                    }
                     directive.update(directive.el, newValue, directive.argument, directive)
                 })
             }
