@@ -28,9 +28,7 @@ function Welement(option) {
     processNode(rootEl)
 
     // 初始设置触发 set 存取器
-    for (var key in bindings) {
-        log('key', key)
-        log('opt key', opt[key])
+    for (var key in bindings) {        
         self.data[key] = opt.data[key]
     }
     

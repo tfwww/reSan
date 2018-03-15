@@ -42,7 +42,7 @@ var app = new Welement({
         msg: 'hellowinter',
         hello: 'hello',
         changeMessage: function () {
-            app.scope.msg = 'hola'
+            app.data.msg = 'msg'
         }
     }    
 })
