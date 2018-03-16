@@ -39,14 +39,34 @@ var app = new Welement({
     el: 'app',
     // template
     data: {
-        msg: 'hellowinter',
+        // msg: 'hellowinter',
+        // hello: 'hello',
+        // changeMessage: function () {
+        //     app.data.msg = 'msg'
+        // }
+        'msg.wow': 'wow',
         hello: 'hello',
         changeMessage: function () {
-            app.data.msg = 'msg'
+            app.scope['msg.wow'] = 'hola'
+        },
+        remove: function () {
+            app.destroy()
         }
     }    
 })
 
+id: 'test',
+// template
+scope: {
+    'msg.wow': 'wow',
+    hello: 'hello',
+    changeMessage: function () {
+        app.scope['msg.wow'] = 'hola'
+    },
+    remove: function () {
+        app.destroy()
+    }
+}
 // function eventBind() {
 //     var ele = document.querySelector('.input')
 //     ele.addEventListener('input', function(event) {
