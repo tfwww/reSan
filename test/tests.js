@@ -55,18 +55,6 @@ var app = new Welement({
     }    
 })
 
-id: 'test',
-// template
-scope: {
-    'msg.wow': 'wow',
-    hello: 'hello',
-    changeMessage: function () {
-        app.scope['msg.wow'] = 'hola'
-    },
-    remove: function () {
-        app.destroy()
-    }
-}
 // function eventBind() {
 //     var ele = document.querySelector('.input')
 //     ele.addEventListener('input', function(event) {
