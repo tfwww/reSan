@@ -8,10 +8,11 @@ var selectors = Object.keys(Directives).map(function(key) {
 }).join()
 
 function Welement(option) {    
-    var self = this    
+    var self = this
     var opt = option || {}    
     var bindings = {}
-
+    
+    self.bindings = bindings
     self.data = {}
     self.el = document.getElementById(opt.el)
     
@@ -30,12 +31,23 @@ function Welement(option) {
     function processNode(el) {
         var attrs = cloneAttrs(el.attributes)
         attrs.forEach(function(attr) {
-            var directive = parseDirective(attr)
-            log('directive', directive)
+            var directive = parseDirective(attr)            
             if (directive) {
+                log('1', directive)
                 bindDirective(self, el, bindings, directive)
             }
         })
+    }
+    log('bindings', bindings)
+}
+
+Welement.prototype.destroy = function() {
+    var bindings = this.bindings
+    for (var key in bindings) {
+        if (bindings.hasOwnProperty(key)) {
+            
+            
+        }
     }
 }
 
@@ -75,8 +87,7 @@ function parseDirective(attr) {
     var dirName = symInx === -1 ? noprefix : noprefix.slice(0, symInx)
     var def = Directives[dirName]
     // 取第二个 - 的参数, 事件
-    var arg = symInx === -1 ? null : noprefix.slice(symInx + 1)
-    
+    var arg = symInx === -1 ? null : noprefix.slice(symInx + 1)    
     return def === undefined ? null : {
         attr: attr,
         key: key,
@@ -94,17 +105,16 @@ function bindDirective(welement, el, bindings, directive) {
     var binding = bindings[key]    
     
     if (!binding) {
-        bindings[key] = {
-            value: undefined,
-            directives: []
-        }
+        log('no binding')        
         binding = {
             value: undefined,
             directives: []
         }
+
+        bindings[key] = binding
     }
     directive.el = el
-    binding.directives.push(directive)
+    binding.directives.push(directive)    
     var data = welement.data
     if (!data.hasOwnProperty(key)) {   
         bindAccessor(welement, key, binding)

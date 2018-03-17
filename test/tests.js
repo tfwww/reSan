@@ -47,7 +47,7 @@ var app = new Welement({
         'msg.wow': 'wow',
         hello: 'hello',
         changeMessage: function () {
-            app.scope['msg.wow'] = 'hola'
+            app.data['msg.wow'] = 'hola'
         },
         remove: function () {
             app.destroy()
