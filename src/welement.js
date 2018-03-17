@@ -32,8 +32,7 @@ function Welement(option) {
         var attrs = cloneAttrs(el.attributes)
         attrs.forEach(function(attr) {
             var directive = parseDirective(attr)            
-            if (directive) {
-                log('1', directive)
+            if (directive) {                
                 bindDirective(self, el, bindings, directive)
             }
         })
@@ -46,7 +45,7 @@ Welement.prototype.destroy = function() {
     for (var key in bindings) {
         if (bindings.hasOwnProperty(key)) {
             
-            
+
         }
     }
 }
@@ -87,7 +86,7 @@ function parseDirective(attr) {
     var dirName = symInx === -1 ? noprefix : noprefix.slice(0, symInx)
     var def = Directives[dirName]
     // 取第二个 - 的参数, 事件
-    var arg = symInx === -1 ? null : noprefix.slice(symInx + 1)    
+    var arg = symInx === -1 ? null : noprefix.slice(symInx + 1)
     return def === undefined ? null : {
         attr: attr,
         key: key,
@@ -102,10 +101,9 @@ function parseDirective(attr) {
 function bindDirective(welement, el, bindings, directive) {
     el.removeAttribute(directive.attr.name)
     var key = directive.key
-    var binding = bindings[key]    
+    var binding = bindings[key]
     
     if (!binding) {
-        log('no binding')        
         binding = {
             value: undefined,
             directives: []
@@ -116,7 +114,7 @@ function bindDirective(welement, el, bindings, directive) {
     directive.el = el
     binding.directives.push(directive)    
     var data = welement.data
-    if (!data.hasOwnProperty(key)) {   
+    if (!data.hasOwnProperty(key)) {
         bindAccessor(welement, key, binding)
     }
 }
