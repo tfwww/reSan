@@ -1,7 +1,11 @@
 var Filter = {
-    capitalize: function (value) {
+    capitalize: function(value) {
         var valueStr = value.toString()
         return valueStr.toUpperCase()
+    },
+    lowercase: function(value) {
+        var valueStr = value.toString()
+        return valueStr.toLowerCase()
     }
 }
 
