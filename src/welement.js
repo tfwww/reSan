@@ -32,22 +32,26 @@ function Welement(option) {
         var attrs = cloneAttrs(el.attributes)
         attrs.forEach(function(attr) {
             var directive = parseDirective(attr)            
-            if (directive) {                
+            if (directive) {      
                 bindDirective(self, el, bindings, directive)
             }
         })
-    }
-    log('bindings', bindings)
+    }    
 }
 
 Welement.prototype.destroy = function() {
+    log('destroy')
     var bindings = this.bindings
     for (var key in bindings) {
-        if (bindings.hasOwnProperty(key)) {
-            
-
-        }
+        var directives = bindings[key].directives
+        directives.forEach(function(directive) {
+            if (directive.definition.unbind) {
+                directive.definition.unbind(directive.el, directive.argument, directive)                
+            }
+        })
     }
+    // 删除元素
+    this.el.parentNode.remove(this.el)
 }
 
 /**
