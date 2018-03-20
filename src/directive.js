@@ -2,21 +2,20 @@ import {Directives} from './directives'
 import {Filter} from './filter'
 import {Config} from './config'
 
-var prefix = 'v'
 var KEY_RE = /^[^\|]+/
 var FILTERS_RE = /\|[^\|]+/g
 
 // 指令类
 function Directive(def, attr, arg, key) {
     if (typeof def === 'function') {
-        this.definition = def
+        this._update = def
     } else {
-        for (var key in def) {
-            if (key === 'update') {
-                this.definition = def.update
+        for (var prop in def) {
+            if (prop === 'update') {
+                this._update = def.update
                 continue                
             }  
-            this[key] = def[key]
+            this[prop] = def[prop]
         }
     }
     this.attr = attr
@@ -27,7 +26,7 @@ function Directive(def, attr, arg, key) {
     if (filters) {
         this.filters = filters.map(function(filter) {
             var tokens = filter.replace('|', '').trim().split(/\s+/)
-            var defToken = tokens[0]            
+            var defToken = tokens[0]
             return {
                 name: defToken,
                 apply: Filter[defToken],
@@ -42,7 +41,7 @@ Directive.prototype.update = function(value) {
     if (this.filters) {
         value = this.applyFilters(value)
     }
-    this.definition(value)
+    this._update(value)
 }
 
 Directive.prototype.applyFilters = function(value) {
