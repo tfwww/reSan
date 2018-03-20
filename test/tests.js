@@ -44,14 +44,24 @@ var app = new Welement({
         // changeMessage: function () {
         //     app.data.msg = 'msg'
         // }
-        'msg.wow': 'wow',
+        'msg.wow': 'wowa',
         hello: 'hello',
         changeMessage: function () {
             app.data['msg.wow'] = 'hola'
         },
         remove: function () {
             app.destroy()
-        }
+        },
+        todos: [
+            {
+                title: 'make this shit work',
+                done: false
+            },
+            {
+                title: 'make this shit kinda work',
+                done: true
+            }
+        ]
     }    
 })
 
@@ -72,3 +82,34 @@ var app = new Welement({
 
 // var rootEle = document.querySelector('#app')
 // formatNode(rootEle)
+
+// Seed.filter('money', function (value) {
+//     return '$' + value.toFixed(2)
+// })
+
+// // define a seed
+// var Todos = Seed.extend({
+//     id: 0,
+//     changeMessage: function () {
+//         this.scope['msg.wow'] = 'hola'
+//     },
+//     remove: function () {
+//         this.destroy()
+//     }
+// })
+
+// var todos = new Todos('#test', {
+//     total     : 1000,
+//     'msg.wow' : 'wow',
+//     hello     : 'hello',
+//     todos     : [
+//         {
+//             title: 'make this shit work',
+//             done: false
+//         },
+//         {
+//             title: 'make this shit kinda work',
+//             done: true
+//         }
+//     ]
+// })

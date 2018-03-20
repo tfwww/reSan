@@ -1,15 +1,16 @@
 import util from './util'
 import {Directives} from './directives'
 import {Filter} from './filter'
+import {parse as Directive} from './directive'
 
 var prefix = 'v'
 var selectors = Object.keys(Directives).map(function(key) {
     return `[${prefix}-${key}]`
 }).join()
 
-function Welement(option) {    
+function Welement(option) {
     var self = this
-    var opt = option || {}    
+    var opt = option || {}   
     var bindings = {}
     
     self.bindings = bindings
@@ -24,14 +25,16 @@ function Welement(option) {
     processNode(rootEl)
 
     // 初始设置触发 set 存取器
-    for (var key in bindings) {        
+    for (var key in bindings) {
         self.data[key] = opt.data[key]
     }
     
     function processNode(el) {
         var attrs = cloneAttrs(el.attributes)
         attrs.forEach(function(attr) {
-            var directive = parseDirective(attr)            
+            var directive = Directive(attr)
+            // var directive = parseDirective(attr)
+            log('dire', directive)
             if (directive) {      
                 bindDirective(self, el, bindings, directive)
             }
@@ -54,25 +57,6 @@ Welement.prototype.destroy = function() {
     this.el.parentNode.remove(this.el)
 }
 
-/**
- * 
- * @param {node array like} attrs 一个节点的所有属性
- * @returns {array} list 一个数组，元素为 {name: 属性名, value: 属性值}
- */
-function cloneAttrs(attrs) {
-    var list = Array.prototype.map.call(attrs, function(attr) {
-        return {
-            name: attr.name,
-            value: attr.value
-        }
-    })    
-    return list
-}
-
-/**
- * 
- * @param {object} attr {name: 属性名, value: 属性值}
- */
 function parseDirective(attr) {
     var name = attr.name
     var value = attr.value
@@ -99,6 +83,21 @@ function parseDirective(attr) {
         argument: arg,
         update: typeof def === 'function' ? def : def.update
     }
+}
+
+/**
+ * 
+ * @param {node array like} attrs 一个节点的所有属性
+ * @returns {array} list 一个数组，元素为 {name: 属性名, value: 属性值}
+ */
+function cloneAttrs(attrs) {
+    var list = Array.prototype.map.call(attrs, function(attr) {
+        return {
+            name: attr.name,
+            value: attr.value
+        }
+    })    
+    return list
 }
 
 // 将指令放到 bindings 对象中
@@ -131,12 +130,15 @@ function bindAccessor(obj, key, binding) {
         set: function(newValue) {            
             var oldValue = binding.value
             if (oldValue != newValue) {
-                binding.value = newValue                
-                binding.directives.forEach(function(directive) {                    
+                binding.value = newValue
+                binding.directives.forEach(function(directive) {
+                    log('directive bind', directive)
                     if (newValue && directive.filter) {
-                        newValue = directive.filter(newValue)
+                        // newValue = directive.filter(newValue)
+                        // newValue = directive.applyFilters(newValue)
                     }
-                    directive.update(directive.el, newValue, directive.argument, directive)
+                    // directive.update(directive.el, newValue, directive.argument, directive)
+                    directive.update(newValue)
                 })
             }
         }
